@@ -1,0 +1,3 @@
+Nowa klasa Obliczenia
+Przenieść sumę zakresu liczb
+druga metoda klasy wylicza 2 do n
