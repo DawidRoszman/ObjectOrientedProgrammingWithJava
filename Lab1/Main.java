@@ -2,8 +2,6 @@ import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-        // PROSTA WERSJA
-        //
         PrintInformation();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -15,15 +13,15 @@ class Main {
 
             if (choice == 1) {
 
-                long start, end, sum;
-                start = getInputFromUser("Podaj początkową liczbę zakresu: ", scanner);
-                end = getInputFromUser("Podaj końcową liczbę zakresu: ", scanner);
-                if (end < start) {
+                long startNum, endNum, sum;
+                startNum = getInputFromUser("Podaj początkową liczbę zakresu: ", scanner);
+                endNum = getInputFromUser("Podaj końcową liczbę zakresu: ", scanner);
+                if (endNum < startNum) {
                     System.out.println("Liczba końcowa musi być większa od liczby początkowej");
                     continue;
                 }
-                sum = Calculations.calculateSum(start, end);
-                System.out.println("Suma liczb z zakresu od " + start + " do " + end + " wynosi " + sum);
+                sum = Calculations.calculateSum(startNum, endNum);
+                System.out.println("Suma liczb z zakresu od " + startNum + " do " + endNum + " wynosi " + sum);
             } else if (choice == 2) {
                 long number, power;
                 number = getInputFromUser("Podaj liczbę: ", scanner);
