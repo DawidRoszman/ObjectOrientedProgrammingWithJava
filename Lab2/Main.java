@@ -22,6 +22,7 @@ class Main {
             }
         }
         System.out.println("Goodbye! Have a nice day!");
+        scanner.close();
     }
 
     static void welcomeUser() {
