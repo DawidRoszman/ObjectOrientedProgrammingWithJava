@@ -1,5 +1,3 @@
-import java.lang.Math;
-
 class Cylinder {
     private float radius;
     private float height;
@@ -34,20 +32,20 @@ class Cylinder {
         this.height = height;
     }
 
-    public double calculateSurfaceArea() {
-        return Math.round(Math.PI * Math.pow(radius, 2));
+    public double calculateBaseSurfaceArea() {
+        return Math.PI * Math.pow(radius, 2);
     }
 
-    public double calculateSideArea() {
+    public double calculateLateralSurfaceArea() {
         return Math.PI * 2 * radius * height;
     }
 
-    public double calculateArea() {
-        return 2 * calculateSurfaceArea() * calculateSideArea();
+    public double calculateTotalSurfaceArea() {
+        return 2 * calculateBaseSurfaceArea() + calculateLateralSurfaceArea();
     }
 
     public double calculateVolume() {
-        return calculateSurfaceArea() * height;
+        return calculateBaseSurfaceArea() * height;
     }
 
 }

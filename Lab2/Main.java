@@ -10,40 +10,18 @@ class Main {
         boolean running = true;
 
         while (running) {
-
             displayOptions();
-            int userChoice = askUser("", scanner);
+            int userChoice = getIntInputFromUser("", scanner);
             switch (userChoice) {
-                case 1:
-                    System.out.println("Radius: " + cylinder.getRadius() + "\nHeight: " + cylinder.getHeight());
-                    break;
-                case 2:
-                    setValuesOfCylinder(cylinder, scanner);
-                    break;
-                case 3:
-                    double surfaceArea = cylinder.calculateSurfaceArea();
-                    double sideSurface = cylinder.calculateSideArea();
-                    double area = cylinder.calculateArea();
-                    String response = String.format("""
-                            Surface area: %.2f
-                            Side area: %.2f
-                            Area: %.2f""", surfaceArea, sideSurface, area);
-                    System.out.println(response);
-                    break;
-                case 4:
-                    double volume = cylinder.calculateVolume();
-                    System.out.printf("Volume: %.2f\n", volume);
-                    break;
-                case 5:
-                    running = false;
-                    System.out.println("Goodbye! Have a nice day!");
-                    break;
-                default:
-                    System.out.println("No such option, try again!");
+                case 1 -> displayCylinderValues(cylinder);
+                case 2 -> setValuesOfCylinder(cylinder, scanner);
+                case 3 -> displayArea(cylinder);
+                case 4 -> displayVolume(cylinder);
+                case 5 -> running = false;
+                default -> System.out.println("No such option, try again!");
             }
-
         }
-
+        System.out.println("Goodbye! Have a nice day!");
     }
 
     static void welcomeUser() {
@@ -62,15 +40,19 @@ class Main {
                 5. Exit the program""");
     }
 
-    static int askUser(String content, Scanner scanner) {
+    static void displayCylinderValues(Cylinder cylinder) {
+        System.out.println("Radius: " + cylinder.getRadius()
+                + "\nHeight: " + cylinder.getHeight());
+    }
+
+    static int getIntInputFromUser(String content, Scanner scanner) {
         System.out.println(content);
         try {
-            int input = scanner.nextInt();
-            return input;
+            return scanner.nextInt();
         } catch (InputMismatchException e) {
             System.err.println("Wrong input, try again!");
             scanner.nextLine();
-            return askUser(content, scanner);
+            return getIntInputFromUser(content, scanner);
         }
 
     }
@@ -97,6 +79,23 @@ class Main {
             setValuesOfCylinder(cylinder, scanner);
             return;
         }
+
+    }
+
+    static void displayArea(Cylinder cylinder) {
+        double baseSurfaceArea = cylinder.calculateBaseSurfaceArea();
+        double lateralSurfaceArea = cylinder.calculateLateralSurfaceArea();
+        double totalSurfaceArea = cylinder.calculateTotalSurfaceArea();
+        String response = String.format("""
+                Base surface area: %.2f
+                Lateral surface area: %.2f
+                Total surface area: %.2f""", baseSurfaceArea, lateralSurfaceArea, totalSurfaceArea);
+        System.out.println(response);
+    }
+
+    static void displayVolume(Cylinder cylinder) {
+        double volume = cylinder.calculateVolume();
+        System.out.printf("Volume: %.2f\n", volume);
 
     }
 
