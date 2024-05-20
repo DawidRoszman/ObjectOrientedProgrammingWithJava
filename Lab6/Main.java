@@ -1,7 +1,6 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 class Main {
@@ -90,7 +89,6 @@ class Main {
             calendar.addElement(0, new Task("Task 9", LocalTime.of(13, 30), LocalTime.of(15, 0), Status.DONE));
             calendar.addElement(0, new Task("Task 10", LocalTime.of(14, 30), LocalTime.of(16, 0), Status.PLANNED));
 
-
             calendar.addElement(1, new Task("Task 1", LocalTime.of(12, 30), LocalTime.of(14, 30), Status.PLANNED));
             calendar.addElement(1, new Task("Task 2", LocalTime.of(14, 30), LocalTime.of(16, 30), Status.CONFIRMED));
 
@@ -151,6 +149,7 @@ class Main {
         }
         return priority;
     }
+
     static Status getStatusFromUser(Scanner scanner) {
         String statusInput = getStringInputFromUser("Enter status (planned, confirmed, in_progress, done): ", scanner);
         Status status;
@@ -168,6 +167,7 @@ class Main {
         }
         return status;
     }
+
     static void addMeeting(Calendar calendar, Scanner scanner) {
         scanner.nextLine();
         String description = getStringInputFromUser("Enter description: ", scanner);
@@ -187,6 +187,7 @@ class Main {
         calendar.addElement(dayOfMeeting, newMeeting);
 
     }
+
     static void addTask(Calendar calendar, Scanner scanner) {
         scanner.nextLine();
         String description = getStringInputFromUser("Enter description: ", scanner);
@@ -210,13 +211,16 @@ class Main {
     static void removeMeeting(Calendar calendar, Scanner scanner) {
         int day = displayMeetings(calendar, scanner);
         int meetingNumber = getIntInputFromUser("Enter number of meeting you want to delete: ", scanner);
-        calendar.removeElement(day, calendar.getElementsFromDay(day, meeting -> meeting instanceof Meeting).get(meetingNumber - 1));
+        calendar.removeElement(day,
+                calendar.getElementsFromDay(day, meeting -> meeting instanceof Meeting).get(meetingNumber - 1));
     }
+
     static void removeTask(Calendar calendar, Scanner scanner) {
         int day = displayTasks(calendar, scanner);
         int taskNumber = getIntInputFromUser("Enter number of task you want to delete: ", scanner);
         calendar.removeElement(day, calendar.getElementsFromDay(day, task -> task instanceof Task).get(taskNumber - 1));
     }
+
     static int displayMeetings(Calendar calendar, Scanner scanner) {
         int day = getDayOfWeekFromUser(scanner);
         ArrayList<Element> meetingsInDay = calendar.getElementsFromDay(day, meeting -> meeting instanceof Meeting);
@@ -225,6 +229,7 @@ class Main {
         }
         return day;
     }
+
     static int displayTasks(Calendar calendar, Scanner scanner) {
         int day = getDayOfWeekFromUser(scanner);
         ArrayList<Element> tasksInDay = calendar.getElementsFromDay(day, task -> task instanceof Task);
@@ -233,6 +238,7 @@ class Main {
         }
         return day;
     }
+
     static void displayMeetingsWithGivenPriority(Calendar calendar, Scanner scanner) {
         scanner.nextLine();
         Priority priority = getPriorityFromUser(scanner);
@@ -244,6 +250,7 @@ class Main {
             System.out.println(i + 1 + " " + meetingsInDay.get(i));
         }
     }
+
     static void displayTasksWithGivenStatus(Calendar calendar, Scanner scanner) {
         scanner.nextLine();
         Status status = getStatusFromUser(scanner);
@@ -255,24 +262,28 @@ class Main {
             System.out.println(i + 1 + " " + tasksInDay.get(i));
         }
     }
+
     static void displayMeetingsStartingNotBeforeGivenTimeWithPriority(Calendar calendar, Scanner scanner) {
         scanner.nextLine();
         Priority priority = getPriorityFromUser(scanner);
         LocalTime startTime = LocalTime.parse(getStringInputFromUser("Enter start time: ", scanner));
         int day = getDayOfWeekFromUser(scanner);
         ArrayList<Element> meetingsInDay = calendar.getElementsFromDay(day,
-                meeting -> meeting instanceof Meeting &&  meeting.getStartTime().compareTo(startTime) >= 0 && ((Meeting) meeting).getPriority().equals(priority));
+                meeting -> meeting instanceof Meeting && meeting.getStartTime().compareTo(startTime) >= 0
+                        && ((Meeting) meeting).getPriority().equals(priority));
         for (int i = 0; i < meetingsInDay.size(); i++) {
             System.out.println(i + 1 + " " + meetingsInDay.get(i));
         }
     }
+
     static void displayTasksEndingNotAfterGivenTimeWithStatus(Calendar calendar, Scanner scanner) {
         scanner.nextLine();
         Status status = getStatusFromUser(scanner);
         LocalTime endTime = LocalTime.parse(getStringInputFromUser("Enter end time: ", scanner));
         int day = getDayOfWeekFromUser(scanner);
         ArrayList<Element> tasksInDay = calendar.getElementsFromDay(day,
-                task -> task instanceof Task &&  task.getEndTime().compareTo(endTime) <= 0 && ((Task) task).getStatus().equals(status));
+                task -> task instanceof Task && task.getEndTime().compareTo(endTime) <= 0
+                        && ((Task) task).getStatus().equals(status));
         for (int i = 0; i < tasksInDay.size(); i++) {
             System.out.println(i + 1 + " " + tasksInDay.get(i));
         }
